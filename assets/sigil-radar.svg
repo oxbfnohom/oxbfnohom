@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-label="radar">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#7CC8F5"/><stop offset="1" stop-color="#0A7BC8"/>
+    </linearGradient>
+  </defs>
+  <g fill="none" stroke="url(#g)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="16" cy="16" r="11"/><circle cx="16" cy="16" r="5"/><path d="M16 16L25 9"/>
+  </g>
+</svg>
