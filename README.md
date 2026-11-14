@@ -26,7 +26,7 @@ Everything else that is public. This list rebuilds itself from the GitHub API ev
 <!-- REPOS:BEGIN -->
 | Repository | What it is | Stack |
 | --- | --- | --- |
-| <img src="assets/sigil-radar.svg" width="28" align="absmiddle" alt=""> **[tmp-profile-check](https://github.com/oxbfnohom/tmp-profile-check)**<br><sub>0 stars</sub> | temporary check for the profile README generator | - |
+| _more soon_ |  |  |
 <!-- REPOS:END -->
 
 <img src="assets/rule.svg" alt="" width="100%">
