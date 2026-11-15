@@ -43,10 +43,12 @@ Everything else that is public.
 
 ## Activity
 
-These three render from live GitHub data on every page load, so they are never stale.
+The streak card is rebuilt from the GitHub API every five minutes by the workflow that keeps this
+profile in sync, so its numbers are never more than five minutes old. The two cards below are
+pulled from their own services on every page load.
 
 <p>
-<img src="https://streak-stats.demolab.com?user=oxbfnohom&background=06070A&border=1B2233&stroke=2E9BE0&ring=0A7BC8&fire=2E9BE0&currStreakLabel=C9D3E6&sideLabels=C9D3E6&dates=6C7A96&currStreakNum=FFFFFF&sideNums=FFFFFF&include_all_commits=true" alt="Contribution streak" height="160">
+<img src="assets/streak.svg" alt="Contribution streak" width="100%">
 </p>
 
 <p>

@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import json
 import os
+import subprocess
 import sys
 import urllib.error
 import urllib.request
@@ -35,6 +36,21 @@ SIGILS = [
     "assets/sigil-key.svg",
     "assets/sigil-chip.svg",
 ]
+
+ASSETS = Path(__file__).resolve().parent.parent / "assets"
+GQL = "https://api.github.com/graphql"
+CONTRIB_QUERY = """
+{
+  user(login: "oxbfnohom") {
+    contributionsCollection {
+      contributionCalendar {
+        totalContributions
+        weeks { contributionDays { contributionCount date } }
+      }
+    }
+  }
+}
+"""
 
 # Flagship rows: hand-written blurb + stack, icon fixed. Stars stay automatic.
 CURATED = {
@@ -140,6 +156,151 @@ def activity_block(repos: list[dict], token: str | None) -> str:
     return f"{head}\n\n{tail}"
 
 
+def contribution_calendar(token: str | None) -> dict:
+    """Public contribution calendar, read straight from GitHub's GraphQL API.
+
+    No third-party stats service sits in the middle, so the numbers are only as
+    old as this run (five minutes) instead of somebody else's cache.
+    """
+    if token:
+        req = urllib.request.Request(
+            GQL,
+            data=json.dumps({"query": CONTRIB_QUERY}).encode(),
+            headers={
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json",
+                "User-Agent": "oxbfnohom-profile-readme",
+            },
+        )
+        with urllib.request.urlopen(req, timeout=45) as resp:
+            payload = json.load(resp)
+    else:
+        # Local run without a token: borrow the gh CLI's own session.
+        done = subprocess.run(
+            ["gh", "api", "graphql", "-f", "query=" + CONTRIB_QUERY],
+            capture_output=True,
+            text=True,
+        )
+        if done.returncode != 0:
+            raise RuntimeError("gh api graphql gagal: " + done.stderr.strip()[:200])
+        payload = json.loads(done.stdout)
+    if "errors" in payload:
+        raise RuntimeError("graphql error: " + str(payload["errors"][0].get("message")))
+    return payload["data"]["user"]["contributionsCollection"]["contributionCalendar"]
+
+
+def _day(value: str) -> datetime:
+    return datetime.strptime(value, "%Y-%m-%d").date()
+
+
+def _fmt(day) -> str:
+    return f"{day.strftime('%b')} {day.day}, {day.year}"
+
+
+def streak_numbers(cal: dict) -> dict:
+    """Total, current and longest streak, counted from the raw calendar."""
+    days: dict[str, int] = {}
+    for week in cal["weeks"]:
+        for day in week["contributionDays"]:
+            days[day["date"]] = day["contributionCount"]
+
+    today = datetime.now(timezone.utc).date()
+    active = sorted(d for d, c in days.items() if c > 0 and d <= today.isoformat())
+
+    # A live streak may end yesterday rather than today; GitHub counts it too.
+    cursor = today
+    if days.get(today.isoformat(), 0) == 0:
+        cursor -= timedelta(days=1)
+    start = cursor
+    current = 0
+    while days.get(cursor.isoformat(), 0) > 0:
+        current += 1
+        cursor -= timedelta(days=1)
+
+    # Walk every calendar day, not just the contributing ones: a gap in the
+    # sorted "has contributions" list is not a gap in the streak.
+    longest, run, run_start = 0, 0, None
+    long_start = long_end = None
+    for ds in sorted(days):
+        if ds > today.isoformat():
+            continue  # the calendar pads its final week with future days
+        if days[ds] > 0:
+            if run == 0:
+                run_start = _day(ds)
+            run += 1
+            if run > longest:
+                longest, long_start, long_end = run, run_start, _day(ds)
+        else:
+            run = 0
+
+    # cursor now sits on the first quiet day just before the live streak.
+    current_start = current_end = None
+    if current:
+        current_end = start
+        current_start = start - timedelta(days=current - 1)
+
+    return {
+        "total": cal["totalContributions"],
+        "current": current,
+        "current_start": current_start,
+        "current_end": current_end,
+        "longest": longest,
+        "longest_start": long_start,
+        "longest_end": long_end,
+        "since": _day(active[0]) if active else today,
+    }
+
+
+def streak_svg(token: str | None) -> str | None:
+    """Render the streak card ourselves -- assets/streak.svg, no cache.
+
+    Returns None (and leaves the previous file alone) when GitHub cannot be
+    read, so a bad API minute never blanks the card.
+    """
+    try:
+        n = streak_numbers(contribution_calendar(token))
+    except Exception as exc:
+        print(f"  streak svg            : gagal ({exc}) -- file lama dipertahankan", file=sys.stderr)
+        return None
+
+    if n["current"]:
+        cur = f"{_fmt(n['current_start'])} - {_fmt(n['current_end'])}"
+    else:
+        cur = "-"
+    long = f"{_fmt(n['longest_start'])} - {_fmt(n['longest_end'])}" if n["longest"] else "-"
+    cols = [
+        (n["total"], "TOTAL CONTRIBUTIONS", f"{_fmt(n['since'])} - present"),
+        (n["current"], "CURRENT STREAK", cur),
+        (n["longest"], "LONGEST STREAK", long),
+    ]
+
+    cells = []
+    for i, (num, label, span) in enumerate(cols):
+        cx = 150 + i * 300
+        cells.append(
+            f'<text x="{cx}" y="86" text-anchor="middle" font-size="56" font-weight="700" '
+            f'fill="#FFFFFF">{num}</text>'
+        )
+        cells.append(f'<rect x="{cx - 24}" y="100" width="48" height="3" rx="1.5" fill="#2E9BE0"/>')
+        cells.append(
+            f'<text x="{cx}" y="126" text-anchor="middle" font-size="12.5" letter-spacing="1.6" '
+            f'fill="#8B96B0">{label}</text>'
+        )
+        cells.append(
+            f'<text x="{cx}" y="148" text-anchor="middle" font-size="11.5" fill="#5A6684">{span}</text>'
+        )
+
+    return (
+        '<svg xmlns="http://www.w3.org/2000/svg" width="900" height="176" viewBox="0 0 900 176" '
+        'font-family="sans-serif">\n'
+        '  <rect width="900" height="176" rx="10" fill="#0D1117" stroke="#1B2233"/>\n'
+        '  <line x1="300" y1="34" x2="300" y2="142" stroke="#1B2233"/>\n'
+        '  <line x1="600" y1="34" x2="600" y2="142" stroke="#1B2233"/>\n  '
+        + "\n  ".join(cells)
+        + "\n</svg>\n"
+    )
+
+
 def row(repo: dict, icon: str, blurb: str, stack: str) -> str:
     stars = repo.get("stargazers_count", 0)
     label = f"{stars} star" + ("" if stars == 1 else "s")
@@ -195,11 +356,14 @@ def main() -> int:
 
     selected, others, notes = render(repos)
     activity = activity_block(repos, token)
+    svg = streak_svg(token)
     text = README.read_text(encoding="utf-8")
     text = splice(text, "<!-- SELECTED:BEGIN -->", "<!-- SELECTED:END -->", selected)
     text = splice(text, "<!-- REPOS:BEGIN -->", "<!-- REPOS:END -->", others)
     text = splice(text, "<!-- ACTIVITY:BEGIN -->", "<!-- ACTIVITY:END -->", activity)
     README.write_text(text, encoding="utf-8", newline="\n")
+    if svg is not None:
+        ASSETS.joinpath("streak.svg").write_text(svg, encoding="utf-8", newline="\n")
 
     print(f"repo publik kebaca : {len(repos)}")
     for name in sorted(CURATED):
@@ -207,6 +371,8 @@ def main() -> int:
         print(f"  curated {name:20s} {'OK ' + str(hit['stargazers_count']) + ' stars' if hit else 'MISSING'}")
     print(f"  baris 'other repositories' : {max(len(repos) - len(CURATED), 0)}")
     print("  activity strip : " + activity.replace("\n\n", " | ").replace("**", ""))
+    if svg is not None:
+        print("  streak svg     : assets/streak.svg ditulis ulang")
     for n in notes:
         print("  note: " + n)
     return 0
