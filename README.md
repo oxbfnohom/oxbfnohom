@@ -8,6 +8,16 @@ I build agent systems that keep running after I close the laptop: a personal fle
 
 <img src="assets/rule.svg" alt="" width="100%">
 
+## Live
+
+<!-- ACTIVITY:BEGIN -->
+**3** public repositories · **21** stars · **3** followers
+
+Last push: **[vetted-skills](https://github.com/oxbfnohom/vetted-skills)** · today at 20:58 WIB · `Python`
+<!-- ACTIVITY:END -->
+
+<sub>Rebuilt from the GitHub API every 5 minutes, so a repo that just went public shows up here on its own.</sub>
+
 ## Selected work
 
 <!-- SELECTED:BEGIN -->
@@ -21,20 +31,22 @@ I build agent systems that keep running after I close the laptop: a personal fle
 
 ## More repositories
 
-Everything else that is public. This list rebuilds itself from the GitHub API every couple of hours, so a freshly pushed repo shows up here on its own.
+Everything else that is public.
 
 <!-- REPOS:BEGIN -->
 | Repository | What it is | Stack |
 | --- | --- | --- |
-| <img src="assets/sigil-radar.svg" width="28" align="absmiddle" alt=""> **[vetted-skills](https://github.com/oxbfnohom/vetted-skills)**<br><sub>0 stars</sub> | Search agent skills, scan them for security findings, and install a reviewed copy with a provenance record. | `Python` |
+| <img src="assets/sigil-radar.svg" width="28" align="absmiddle" alt=""> **[vetted-skills](https://github.com/oxbfnohom/vetted-skills)**<br><sub>1 star</sub> | Search agent skills, scan them for security findings, and install a reviewed copy with a provenance record. | `Python` |
 <!-- REPOS:END -->
 
 <img src="assets/rule.svg" alt="" width="100%">
 
-## Numbers
+## Activity
+
+These three render from live GitHub data on every page load, so they are never stale.
 
 <p>
-<img src="https://streak-stats.demolab.com?user=oxbfnohom&background=06070A&border=1B2233&stroke=2E9BE0&ring=0A7BC8&fire=2E9BE0&currStreakLabel=C9D3E6&sideLabels=C9D3E6&dates=6C7A96&currStreakNum=FFFFFF&sideNums=FFFFFF" alt="Contribution streak" height="160">
+<img src="https://streak-stats.demolab.com?user=oxbfnohom&background=06070A&border=1B2233&stroke=2E9BE0&ring=0A7BC8&fire=2E9BE0&currStreakLabel=C9D3E6&sideLabels=C9D3E6&dates=6C7A96&currStreakNum=FFFFFF&sideNums=FFFFFF&include_all_commits=true&count_private=true" alt="Contribution streak" height="160">
 </p>
 
 <p>

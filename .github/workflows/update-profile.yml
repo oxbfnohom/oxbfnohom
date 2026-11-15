@@ -4,8 +4,11 @@ name: Update profile README
 # push a new public repo and it shows up here on the next run.
 on:
   schedule:
-    - cron: "17 */2 * * *" # every 2 hours
+    # Near-realtime: a repo that just went public lands on the profile within
+    # 5 minutes. Minutes are free on a public repository, so this costs nothing.
+    - cron: "*/5 * * * *"
   workflow_dispatch:
+  repository_dispatch: # an external webhook can force a refresh immediately
   push:
     branches: [main]
     paths:
@@ -45,5 +48,5 @@ jobs:
           git config user.name  "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md
-          git commit -m "Profile: refresh repository list [skip ci]"
+          git commit -m "Profile: refresh repositories + live strip [skip ci]"
           git push
