@@ -46,7 +46,7 @@ Everything else that is public.
 These three render from live GitHub data on every page load, so they are never stale.
 
 <p>
-<img src="https://streak-stats.demolab.com?user=oxbfnohom&background=06070A&border=1B2233&stroke=2E9BE0&ring=0A7BC8&fire=2E9BE0&currStreakLabel=C9D3E6&sideLabels=C9D3E6&dates=6C7A96&currStreakNum=FFFFFF&sideNums=FFFFFF&include_all_commits=true&count_private=true" alt="Contribution streak" height="160">
+<img src="https://streak-stats.demolab.com?user=oxbfnohom&background=06070A&border=1B2233&stroke=2E9BE0&ring=0A7BC8&fire=2E9BE0&currStreakLabel=C9D3E6&sideLabels=C9D3E6&dates=6C7A96&currStreakNum=FFFFFF&sideNums=FFFFFF&include_all_commits=true" alt="Contribution streak" height="160">
 </p>
 
 <p>

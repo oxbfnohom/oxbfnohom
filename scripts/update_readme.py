@@ -81,7 +81,13 @@ def public_repos(token: str | None) -> list[dict]:
         repos.extend(batch)
         if len(batch) < 100:
             break
-    return [r for r in repos if not r.get("fork") and r["name"] not in SKIP]
+    # Public only, always: a private repo must never reach the profile, whatever
+    # the API returns or whichever token the workflow runs with.
+    public = [r for r in repos if not r.get("fork") and r["name"] not in SKIP]
+    leaked = [r["name"] for r in public if r.get("private")]
+    if leaked:
+        raise SystemExit(f"private repo masuk daftar publik, run dibatalkan: {leaked}")
+    return public
 
 
 def esc(text: str) -> str:
