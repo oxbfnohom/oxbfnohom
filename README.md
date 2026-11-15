@@ -26,7 +26,7 @@ Everything else that is public. This list rebuilds itself from the GitHub API ev
 <!-- REPOS:BEGIN -->
 | Repository | What it is | Stack |
 | --- | --- | --- |
-| _more soon_ |  |  |
+| <img src="assets/sigil-radar.svg" width="28" align="absmiddle" alt=""> **[vetted-skills](https://github.com/oxbfnohom/vetted-skills)**<br><sub>0 stars</sub> | Search agent skills, scan them for security findings, and install a reviewed copy with a provenance record. | `Python` |
 <!-- REPOS:END -->
 
 <img src="assets/rule.svg" alt="" width="100%">
