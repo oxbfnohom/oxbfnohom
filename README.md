@@ -11,7 +11,7 @@ I build agent systems that keep running after I close the laptop: a personal fle
 ## Live
 
 <!-- ACTIVITY:BEGIN -->
-**3** public repositories · **21** stars · **3** followers
+**3** public repositories · **22** stars · **3** followers
 
 Last push: **[vetted-skills](https://github.com/oxbfnohom/vetted-skills)** · yesterday · `Python`
 <!-- ACTIVITY:END -->
@@ -23,7 +23,7 @@ Last push: **[vetted-skills](https://github.com/oxbfnohom/vetted-skills)** · ye
 <!-- SELECTED:BEGIN -->
 | Project | What it is | Stack |
 | --- | --- | --- |
-| <img src="assets/sigil-radar.svg" width="28" align="absmiddle" alt=""> **[airdrop-tracker](https://github.com/oxbfnohom/airdrop-tracker)**<br><sub>11 stars</sub> | Self-hosted agent that runs a research pipeline: it reads the Telegram groups you already follow, scores new leads, keeps per-project task lists, and re-checks finished work on a schedule. SQLite, one file, no external queue. | `Next.js` `TypeScript` `SQLite` |
+| <img src="assets/sigil-radar.svg" width="28" align="absmiddle" alt=""> **[airdrop-tracker](https://github.com/oxbfnohom/airdrop-tracker)**<br><sub>12 stars</sub> | Self-hosted agent that runs a research pipeline: it reads the Telegram groups you already follow, scores new leads, keeps per-project task lists, and re-checks finished work on a schedule. SQLite, one file, no external queue. | `Next.js` `TypeScript` `SQLite` |
 | <img src="assets/sigil-mask.svg" width="28" align="absmiddle" alt=""> **[all-about-crime](https://github.com/oxbfnohom/all-about-crime)**<br><sub>9 stars</sub> | Telegram bot that automates the boring parts of OSINT work: rotating proxies, virtual cards, throwaway mail, and OTP handling behind one command surface. | `Python` `Telegram` |
 <!-- SELECTED:END -->
 
