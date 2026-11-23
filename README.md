@@ -11,9 +11,9 @@ I build agent systems that keep running after I close the laptop: a personal fle
 ## Live
 
 <!-- ACTIVITY:BEGIN -->
-**3** public repositories · **22** stars · **3** followers
+**4** public repositories · **22** stars · **3** followers
 
-Last push: **[vetted-skills](https://github.com/oxbfnohom/vetted-skills)** · 8 days ago · `Python`
+Last push: **[malware-hunt-and-removal](https://github.com/oxbfnohom/malware-hunt-and-removal)** · today at 00:45 WIB · `PowerShell`
 <!-- ACTIVITY:END -->
 
 <sub>Rebuilt from the GitHub API every 5 minutes, so a repo that just went public shows up here on its own.</sub>
@@ -37,6 +37,7 @@ Everything else that is public.
 | Repository | What it is | Stack |
 | --- | --- | --- |
 | <img src="assets/sigil-radar.svg" width="28" align="absmiddle" alt=""> **[vetted-skills](https://github.com/oxbfnohom/vetted-skills)**<br><sub>1 star</sub> | Search agent skills, scan them for security findings, and install a reviewed copy with a provenance record. | `Python` |
+| <img src="assets/sigil-mask.svg" width="28" align="absmiddle" alt=""> **[malware-hunt-and-removal](https://github.com/oxbfnohom/malware-hunt-and-removal)**<br><sub>0 stars</sub> | Windows malware hunt & removal: hunt RAT/RMM persistence, find the C2, remove it permanently, verify clean. Agent skill + read-only PowerShell sweep + dry-run removal. | `PowerShell` |
 <!-- REPOS:END -->
 
 <img src="assets/rule.svg" alt="" width="100%">
